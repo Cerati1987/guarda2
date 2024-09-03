@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Comunidad - NiceAdmin{% endblock %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Bienvenido a la Comunidad</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Dashboard Comunidad</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+    <div class="row">
+        <!-- Aquí va el mensaje creativo -->
+        <div class="col-lg-12">
+            <div class="alert alert-primary" role="alert">
+                <h4 class="alert-heading">¡Bienvenido a la Comunidad de Seguridad!</h4>
+                <p>
+                    Estamos aquí para asegurarnos de que tu hogar y tu familia estén seguros. Con la ayuda de nuestros
+                    guardias, vigilamos cada rincón de la comunidad, garantizando que puedas vivir con tranquilidad.
+                    Recuerda que la seguridad es un esfuerzo conjunto; si ves algo inusual, no dudes en informarlo.
+                    Juntos, hacemos de nuestra comunidad un lugar mejor.
+                </p>
+                <hr>
+                <p class="mb-0">
+                    "La seguridad es responsabilidad de todos. Cada gesto cuenta, cada mirada protege."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Aquí podrías agregar scripts adicionales si fuera necesario -->
+{% endblock %}
+git branch -M main

@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Asignar Tareas - NiceAdmin{% endblock %}
+
+{% block content %}
+
+    <div class="pagetitle">
+        <h1>Asignar Tareas</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Asignar Tareas</li>
+          </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Formulario de Asignación de Tareas</h5>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="guardia" class="form-label">Seleccionar Guardia</label>
+                                <select id="guardia" name="guardia" class="form-select" required>
+                                    <option selected>Elija un guardia...</option>
+                                    {% for guardia in guardias %}
+                                        <option value="{{ guardia.id }}">{{ guardia.user.first_name }} {{ guardia.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tarea" class="form-label">Tarea</label>
+                                <input type="text" class="form-control" id="tarea" name="tarea" placeholder="Descripción de la tarea" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="hora" name="hora" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ubicacion" class="form-label">Ubicación</label>
+                                <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ubicación de la tarea" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Asignar Tarea</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Aquí podrías agregar scripts adicionales si fuera necesario -->
+{% endblock %}

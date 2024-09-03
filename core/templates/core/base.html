@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>{% block title %}Dashboard - NiceAdmin Bootstrap Template{% endblock %}</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/dashboard.css' %}" rel="stylesheet">
+
+    {% block extra_head %}
+    {% endblock %}
+</head>
+
+<body class="{% if request.resolver_match.url_name == 'login' or request.resolver_match.url_name == 'registro' %}no-sidebar{% endif %}">
+    {% if not request.resolver_match.url_name == "login" and not request.resolver_match.url_name == "registro" %}
+        <!-- ======= Header ======= -->
+        <header id="header" class="header fixed-top d-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="">
+                    <span class="d-none d-lg-block">NiceAdmin</span>
+                </a>
+                <i class="bi bi-list toggle-sidebar-btn"></i>
+            </div><!-- End Logo -->
+
+            <div class="search-bar">
+                <form class="search-form d-flex align-items-center" method="POST" action="#">
+                    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+                </form>
+            </div><!-- End Search Bar -->
+
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+
+                    <li class="nav-item d-block d-lg-none">
+                        <a class="nav-link nav-icon search-bar-toggle " href="#">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </li><!-- End Search Icon-->
+
+
+                    <!-- Perfil -->
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.user.get_full_name }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li class="dropdown-header">
+                                <h6>{{ request.user.get_full_name }}</h6>
+                                {% if request.user.is_guardia %}
+                                    <span>Guardia</span>
+                                {% elif request.user.is_administrador %}
+                                    <span>Administrador</span>
+                                {% else %}
+                                    <span>Usuario</span>
+                                {% endif %}
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Salir</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {% block header_content %}
+                    <!-- Aquí irían las notificaciones, mensajes, perfil, etc. -->
+                    {% endblock %}
+
+                </ul>
+            </nav><!-- End Icons Navigation -->
+
+        </header><!-- End Header -->
+
+        <aside id="sidebar" class="sidebar">
+            <ul class="sidebar-nav" id="sidebar-nav">
+                {% if request.user.is_guardia %}
+                    <!-- Menú para Guardia -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'home' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard Guardia</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'lista_tareas' %}">
+                            <i class="bi bi-list-task"></i>
+                            <span>Mis Tareas</span>
+                        </a>
+                    </li>
+                    <!-- Nuevo ítem de menú para Registro de Incidentes -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'registro_incidente' %}">
+                            <i class="bi bi-clipboard-plus"></i>
+                            <span>Registro de Incidentes</span>
+                        </a>
+                    </li>
+                {% elif request.user.is_administrador %}
+                    <!-- Menú para Administrador -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_admin' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard Administrador</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">
+                            <i class="bi bi-people"></i>
+                            <span>Gestión de Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'incidentes_reportados' %}">
+                            <i class="bi bi-clipboard-data"></i>
+                            <span>Incidentes Reportados</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'listar_queja' %}">
+                            <i class="bi bi-list"></i>
+                            <span>Ver Quejas</span>
+                        </a>
+                    </li>
+
+
+                {% elif request.user.is_usuario_comunidad %}
+                    <!-- Menú para Usuario Comunidad -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'dashboard_comunidad' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard Comunidad</span>
+                        </a>
+                    </li>
+
+
+                    <!-- Otras opciones específicas para la comunidad -->
+                {% else %}
+                    <!-- Menú por defecto -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'dashboard_comunidad' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard comunidad</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'presentar_queja' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Presentar queja</span>
+                        </a>
+                    </li>
+
+                {% endif %}
+            </ul>
+        </aside><!-- End Sidebar-->
+
+    {% endif %}
+
+    <main id="main" class="main">
+        {% block content %}
+        <!-- Aquí va el contenido principal de cada página -->
+        {% endblock %}
+    </main><!-- End #main -->
+
+    {% if not request.resolver_match.url_name == "login" and not request.resolver_match.url_name == "registro" %}
+        <!-- ======= Footer ======= -->
+        <footer id="footer" class="footer">
+            <div class="copyright">
+                &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- Designed by BootstrapMade -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </footer><!-- End Footer -->
+    {% endif %}
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.11/index.global.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+
+</html>

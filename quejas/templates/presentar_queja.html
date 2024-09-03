@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Presentar Queja{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="main-content">
+        <div class="pagetitle">
+            <h1>Presentar Queja</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active">Presentar Queja</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Formulario de Quejas</h5>
+
+                            <!-- Queja Form -->
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <div class="row mb-3">
+                                    <label for="quejaNombre" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="quejaNombre" name="nombre" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="quejaEmail" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="quejaEmail" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="quejaAsunto" class="col-sm-2 col-form-label">Asunto</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="quejaAsunto" name="asunto" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="quejaMensaje" class="col-sm-2 col-form-label">Mensaje</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="quejaMensaje" name="mensaje" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        <button type="submit" class="btn btn-primary">Enviar Queja</button>
+                                    </div>
+                                </div>
+                            </form><!-- End Queja Form -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- End main-content -->
+
+    <aside class="sidebar-right">
+        <!-- Aquí puedes agregar cualquier contenido adicional o una barra lateral derecha si es necesario -->
+    </aside>
+</div><!-- End content-wrapper -->
+{% endblock %}

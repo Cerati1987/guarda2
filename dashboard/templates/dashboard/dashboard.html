@@ -1,0 +1,159 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - NiceAdmin{% endblock %}
+
+{% block content %}
+    <div class="pagetitle">
+        <h1>Guardias de Seguridad</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active">Guardias de Seguridad</li>
+          </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Calendario de Actividades</h5>
+                        <div id='calendar'></div> <!-- Aquí se renderiza FullCalendar -->
+                        <div class="calendar-controls">
+                            <button id="prev" class="btn btn-primary">Anterior</button>
+                            <button id="next" class="btn btn-primary">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-9">
+                <div class="card">
+                    <div class="card-body d-flex flex-column flex-md-row justify-content-between">
+                        <div class="text-center mb-3 mb-md-0">
+                            <h5 class="card-title">Tareas Asignadas</h5>
+                            <div class="image-container">
+                                <img src="{% static 'assets/img/tareas_asingnadas.webp' %}" alt="Tareas" class="img-fluid rounded responsive-img">
+                            </div>
+                        </div>
+
+                        <div class="text-center mb-3 mb-md-0">
+                            <h5 class="card-title">Quejas de la Comunidad</h5>
+                            <div class="image-container">
+                                <img src="{% static 'assets/img/quejas de comunidad.webp' %}" alt="Quejas" class="img-fluid rounded responsive-img">
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <h5 class="card-title">Actividades de Formación</h5>
+                            <div class="image-container">
+                                <img src="{% static 'assets/img/actividades asingnadas.webp' %}" alt="Formación" class="img-fluid rounded responsive-img">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Actualizar tu estado de trabajo</h5>
+                        <div class="text-center">
+                            <a href="#" onclick="actualizarEstadoTrabajo();">
+                                <img src="{% static 'assets/img/actuilizar_peusto.webp' %}" alt="Actualizar Estado" class="img-fluid rounded responsive-img-specific">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Registro de Incidentes</h5>
+                        <div class="text-center">
+                            <a href="#">
+                                <img src="{% static 'assets/img/FEED.webp' %}" alt="Registro Incidentes" class="img-fluid rounded responsive-img-specific">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Evaluaciones y Feedback</h5>
+                        <div class="text-center">
+                            <a href="#">
+                                <img src="{% static 'assets/img/registrar incidentes.webp' %}" alt="Feedback" class="img-fluid rounded responsive-img-specific">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.11/index.global.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+            left: '',
+            center: 'title',
+            right: ''
+          },
+          locale: 'es',
+          selectable: true,
+          selectMirror: true,
+          dayMaxEvents: true,
+          events: [],
+          select: function(arg) {
+            var title = prompt('Event Title:');
+            if (title) {
+              calendar.addEvent({
+                title: title,
+                start: arg.start,
+                end: arg.end,
+                allDay: arg.allDay
+              })
+            }
+            calendar.unselect()
+          },
+          eventClick: function(arg) {
+            if (confirm('¿Deseas eliminar este evento?')) {
+              arg.event.remove()
+            }
+          },
+          editable: true,
+          dayMaxEvents: true
+        });
+
+        calendar.render();
+
+        document.getElementById('prev').addEventListener('click', function() {
+          calendar.prev();
+        });
+
+        document.getElementById('next').addEventListener('click', function() {
+          calendar.next();
+        });
+      });
+    </script>
+{% endblock %}

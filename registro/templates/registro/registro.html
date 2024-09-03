@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Registro - NiceAdmin{% endblock %}
+
+{% block extra_head %}
+<link href="{% static 'assets/css/registro.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="registro-container">
+    <div class="card">
+        <div class="card-body">
+            <div class="pt-3 pb-2">
+                <h5 class="card-title text-center pb-0 fs-4">Crea una Cuenta</h5>
+                <p class="text-center small">Ingresa tus datos para crear una cuenta</p>
+            </div>
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form class="row g-2 needs-validation" method="POST" action="{% url 'registro' %}" novalidate>
+                {% csrf_token %}
+                <div class="col-12">
+                    <label for="yourName" class="form-label">Tu Nombre</label>
+                    <input type="text" name="name" class="form-control" id="yourName" required>
+                    <div class="invalid-feedback">Por favor, introduce tu nombre.</div>
+                </div>
+
+                <div class="col-12">
+                    <label for="yourEmail" class="form-label">Tu Email</label>
+                    <input type="email" name="email" class="form-control" id="yourEmail" required>
+                    <div class="invalid-feedback">Por favor introduce una dirección de email válida.</div>
+                </div>
+
+                <div class="col-12">
+                    <label for="yourUsername" class="form-label">Nombre de Usuario</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <div class="invalid-feedback">Por favor elige un nombre de usuario.</div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="yourPassword" class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" id="yourPassword" required>
+                    <div class="invalid-feedback">Por favor introduce tu contraseña.</div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                        <label class="form-check-label" for="acceptTerms">Acepto los <a href="#">términos y condiciones</a></label>
+                        <div class="invalid-feedback">Debes aceptar antes de enviar.</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Crear Cuenta</button>
+                </div>
+                <div class="col-12 text-center">
+                    <p class="small mb-0">¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Aquí podrías agregar scripts adicionales si fuera necesario -->
+{% endblock %}

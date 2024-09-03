@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Tareas asignadas - NiceAdmin{% endblock %}
+
+{% block content %}
+
+    <div class="pagetitle">
+        <h1>Mis Tareas Asignadas</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Mis Tareas</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+      <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Lista de Tareas</h5>
+                        <!-- Default Table -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tarea</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Hora</th>
+                                    <th scope="col">Ubicación</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tarea in tareas %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ tarea.descripcion }}</td>
+                                        <td>{{ tarea.fecha }}</td>
+                                        <td>{{ tarea.hora }}</td>
+                                        <td>{{ tarea.ubicacion }}</td>
+                                        <td>{{ tarea.estado }}</td>
+                                        <td>
+                                            <form method="post" action="{% url 'actualizar_estado_tarea' tarea.id %}">
+                                                {% csrf_token %}
+                                                {% if tarea.estado != 'Completada' %}
+                                                    <button type="submit" name="estado" value="En progreso" class="btn btn-warning" {% if tarea.estado == 'En progreso' %}disabled{% endif %}>Marcar en Progreso</button>
+                                                    <button type="submit" name="estado" value="Completada" class="btn btn-success">Completar</button>
+                                                {% endif %}
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

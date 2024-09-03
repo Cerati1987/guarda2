@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Registrar incidentes - NiceAdmin{% endblock %}
+
+{% block content %}
+
+
+      <div class="pagetitle">
+        <h1>Guardias de Seguridad</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Guardias de Seguridad</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12"> <!-- Ajustado para ocupar todo el ancho disponible -->
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Registro y Seguimiento de Incidentes</h5>
+
+                <!-- Subsección: Reporte de Incidentes -->
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <!-- Descripción del Incidente -->
+                  <div class="row mb-3">
+                    <label for="incidentDescription" class="col-sm-2 col-form-label">Descripción</label>
+                    <div class="col-sm-10">
+                      <textarea id="incidentDescription" name="incidentDescription" class="form-control" style="height: 100px" required></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Categoría del Incidente -->
+                  <div class="row mb-3">
+                    <label for="incidentCategory" class="col-sm-2 col-form-label">Categoría del Incidente</label>
+                    <div class="col-sm-10">
+                      <select id="incidentCategory" name="incidentCategory" class="form-select" required>
+                        <option selected>Seleccione una categoría</option>
+                        <option value="Acceso no autorizado">Acceso no autorizado</option>
+                        <option value="Pérdida de datos">Pérdida de datos</option>
+                        <option value="Malware">Malware</option>
+                        <option value="Phishing">Phishing</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Ubicación del Incidente -->
+                  <div class="row mb-3">
+                    <label for="incidentLocation" class="col-sm-2 col-form-label">Ubicación</label>
+                    <div class="col-sm-10">
+                      <input type="text" id="incidentLocation" name="incidentLocation" class="form-control" required>
+                    </div>
+                  </div>
+
+                  <!-- Fotos o Videos (Opcional) -->
+                  <div class="row mb-3">
+                    <label for="incidentMedia" class="col-sm-2 col-form-label">Fotos o Videos (Opcional)</label>
+                    <div class="col-sm-10">
+                      <input class="form-control" type="file" id="incidentMedia" name="incidentMedia" accept="image/*,video/*" multiple>
+                    </div>
+                  </div>
+
+                  <!-- Botón de Envío -->
+                  <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                      <button type="submit" class="btn btn-primary">Reportar Incidente</button>
+                    </div>
+                  </div>
+                </form>
+
+
+                <!-- Aquí podría ir una sección adicional para visualizar el historial de incidentes reportados -->
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Aquí podrías agregar scripts adicionales si fuera necesario -->
+{% endblock %}

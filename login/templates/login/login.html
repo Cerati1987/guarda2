@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+Iniciar Sesión - Guardias
+{% endblock %}
+
+{% block extra_head %}
+<link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-6">
+            <div class="d-flex justify-content-center py-4">
+                <a href="{% url 'home' %}" class="logo d-flex align-items-center w-auto">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="">
+                    <span class="d-none d-lg-block">Guardias</span>
+                </a>
+            </div><!-- End Logo -->
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="pt-4 pb-2">
+                        <h5 class="card-title text-center pb-0 fs-4">Inicia sesión en tu cuenta</h5>
+                        <p class="text-center small">Introduce tu nombre de usuario y contraseña para iniciar sesión</p>
+                    </div>
+
+                    <form class="row g-3 needs-validation" method="POST" action="{% url 'login' %}" novalidate>
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <label for="yourUsername" class="form-label">Nombre de Usuario</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <input type="text" name="username" class="form-control" id="yourUsername" required>
+                                <div class="invalid-feedback">Por favor, introduce tu nombre de usuario.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="yourPassword" class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" id="yourPassword" required>
+                            <div class="invalid-feedback">Por favor, introduce tu contraseña.</div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Recuérdame</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100" type="submit">Iniciar Sesión</button>
+                        </div>
+                        <div class="col-12">
+                            <p class="small mb-0">¿No tienes cuenta? <a href="{% url 'registro' %}">Crea una cuenta</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
